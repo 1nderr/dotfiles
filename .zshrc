@@ -27,6 +27,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z} l:|=* r:|=*'
 # FZF Tab
 _install_plugin https://github.com/Aloxaf/fzf-tab
 source "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
+zstyle ':fzf-tab:*' fzf-bindings 'tab:toggle+down' 'btab:toggle+up'
 
 # History Substring Search
 _install_plugin https://github.com/zsh-users/zsh-history-substring-search
