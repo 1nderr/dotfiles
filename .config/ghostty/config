@@ -1,6 +1,7 @@
 theme = Nord
 background = #22262F
-font-size = 16
+background-opacity = 0.90
+font-size = 14
 font-family = Inconsolata
 font-thicken = true
 font-thicken-strength = 50
