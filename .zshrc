@@ -88,6 +88,9 @@ alias vi="nvim"
 alias vim="nvim"
 alias zrc="vi ~/.zshrc"
 
+# Environment
+export PIP_REQUIRE_VIRTUALENV=true
+
 # Shell Integrations
 eval "$(~/.local/bin/mise activate zsh --shims)"
 
