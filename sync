@@ -38,7 +38,7 @@ def confirm(message: str, default: bool = False) -> bool:
 
 
 def main():
-    _ = subprocess.run(["git", "pull"], check=True)
+    subprocess.run(["git", "pull"], check=True)
 
     remote_paths: list[str] = []
 
