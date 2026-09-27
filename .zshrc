@@ -46,6 +46,9 @@ eval "$(~/.local/bin/mise activate zsh)"
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 
+# Used for tmux-sessionizer
+. "$HOME/.cargo/env"
+
 # ============================================================
 # SECTION 4: PLUGINS
 # ============================================================
@@ -122,7 +125,7 @@ alias grc="vi ~/.config/ghostty/config.ghostty"
 alias lrc="vi ~/.localrc"
 alias trc="vi ~/.config/tmux/tmux.conf"
 alias zrc="vi ~/.zshrc"
-alias ls="ls --color=auto"
+alias ls="ls -a --color=auto"
 alias rl="source ~/.zshrc"
 alias tl="tmux source ~/.config/tmux/tmux.conf"
 alias vi="nvim"
