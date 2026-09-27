@@ -1,0 +1,86 @@
+#! /usr/bin/python
+import subprocess
+from pathlib import Path
+from shutil import copyfile
+
+IGNORED_FILES: list[str] = ["sync", ".gitignore"]
+
+
+def fzf(message: str, choices: list[str], *args: str) -> list[str]:
+    result = subprocess.run(
+        ["fzf", "--height=~50%", "--reverse", f"--header={message}", *args],
+        input="\n".join(choices),
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise KeyboardInterrupt
+    return result.stdout.splitlines()
+
+
+def select(message: str, choices: list[str]) -> str:
+    return fzf(message, choices)[0]
+
+
+def checkbox(message: str, choices: list[str]) -> list[str]:
+    return fzf(
+        f"{message} (tab to toggle, ctrl-a for all)",
+        choices,
+        "--multi",
+        "--bind=ctrl-a:toggle-all",
+    )
+
+
+def confirm(message: str, default: bool = False) -> bool:
+    hint = "Y/n" if default else "y/N"
+    raw = input(f"{message} [{hint}] ").strip().lower()
+    return default if not raw else raw.startswith("y")
+
+
+def main():
+    _ = subprocess.run(["git", "pull"], check=True)
+
+    remote_paths: list[str] = []
+
+    for file in Path(".").rglob("*"):
+        if not file.is_file():
+            continue
+
+        file_path = str(file)
+        if (
+            file_path.startswith(".git/")
+            or file_path.startswith("__pycache__/")
+            or file_path in IGNORED_FILES
+        ):
+            continue
+
+        remote_paths.append(file_path)
+
+    source = select("Where do you want to sync from?", ["local", "remote"])
+    target = "remote" if source == "local" else "local"
+    source_path_prefix = "~/" if source == "local" else ""
+    target_path_prefix = "" if source == "local" else "~/"
+    selected_files = checkbox("Which files do you want to sync?", remote_paths)
+
+    print(f"File sync summary: {source} -> {target}")
+    for file in selected_files:
+        print(f"{source_path_prefix}{file:<30} ->", f"{target_path_prefix}{file:<30}")
+    print()
+
+    if confirm("Continue with sync", default=False):
+        for file in selected_files:
+            source_path = Path(f"{source_path_prefix}{file}").expanduser()
+            target_path = Path(f"{target_path_prefix}{file}").expanduser()
+            copyfile(source_path, target_path)
+    else:
+        print("Sync cancelled")
+        return
+
+    print("Dotfiles synced sucessfully")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt, EOFError:
+        print()
