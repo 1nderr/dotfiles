@@ -1,18 +1,21 @@
 theme = Nord
+
 background = #22262F
 background-opacity = 0.90
+
 font-size = 14
 font-family = Inconsolata
 font-thicken = true
 font-thicken-strength = 50
-# 12 for Fedora, 6 for MacOS 
-adjust-cell-height = 12 
-# 0.5 for Fedora, 1.5 for MacOS 
-mouse-scroll-multiplier = 0.5
+
 cursor-style = block
 cursor-style-blink = true
+
 shell-integration = zsh
 desktop-notifications = true
+
+config-file = ?config.linux
+config-file = ?config.macos
 
 # Free up ctrl+shift+j for tmux resize-pane -D
 keybind = ctrl+shift+j=unbind
