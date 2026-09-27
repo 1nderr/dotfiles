@@ -5,8 +5,10 @@ font-size = 14
 font-family = Inconsolata
 font-thicken = true
 font-thicken-strength = 50
-adjust-cell-height = 6 # 12
-mouse-scroll-multiplier = 1.5 # 0.5
+# 12 for Fedora, 6 for MacOS 
+adjust-cell-height = 12 
+# 0.5 for Fedora, 1.5 for MacOS 
+mouse-scroll-multiplier = 0.5
 cursor-style = block
 cursor-style-blink = true
 shell-integration = zsh
