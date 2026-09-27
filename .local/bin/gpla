@@ -1,6 +1,6 @@
 #!/bin/bash
 
-owner="1nderr"
+owner=$(git config user.name)
 echo "Fetching repo list for owner: $owner"
 gh repo list "$owner" --limit 500 --json name,sshUrl --jq '.[] | "\(.name) \(.sshUrl)"' |
   while IFS=' ' read -r name sshUrl; do
