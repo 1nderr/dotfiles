@@ -1,0 +1,85 @@
+#! /usr/bin/env python3
+
+from pathlib import Path
+from shutil import which
+from subprocess import run
+from sys import platform
+
+FILES = [
+    Path("~/.zshrc").expanduser(),
+    Path("~/.config/ghostty/config.ghostty").expanduser(),
+    Path("~/.config/tmux/tmux.conf").expanduser(),
+]
+TOOLS = [
+    "mise",
+    "nvim",
+    "tmux",
+    "tms",
+    "tpm",
+    "gh",
+    "tree-sitter",
+    "rg",
+    "fd",
+    "fzf",
+    "zoxide",
+    "bat",
+    "zsh",
+    "git",
+    "make",
+    "gcc",
+    "xcode",
+]
+LANGUAGES = [
+    "go",
+    "node",
+    "python3",
+]
+
+TPM_PATH = Path("~/.tmux/plugins/tpm").expanduser()
+
+NO_EMOJI = "❌"
+YES_EMOJI = "✅"
+
+
+def mise_which(tool: str) -> str:
+    return run(["mise", "which", tool], capture_output=True, text=True).stdout.strip()
+
+
+def xcode_select() -> str:
+    return run(["xcode-select", "-p"], capture_output=True, text=True).stdout.strip()
+
+
+def print_status(tool: str, path: str | None, is_found: bool):
+    emoji = YES_EMOJI if is_found else NO_EMOJI
+    path = None if path is not None and len(path) == 0 else path
+    print(f"{emoji} {tool:<15}: {path}")
+
+
+def main():
+    for file in FILES:
+        print_status(file.name, str(file), file.is_file())
+
+    for tool in TOOLS:
+        path = None
+
+        if tool == "tpm" and TPM_PATH.is_dir() and any(TPM_PATH.iterdir()):
+            path = str(TPM_PATH)
+        elif tool == "xcode":
+            if not platform.startswith("darwin"):
+                continue
+            path = xcode_select()
+        else:
+            path = which(tool)
+
+        print_status(tool, path, bool(path))
+
+    if which("mise") is None:
+        return
+
+    for language in LANGUAGES:
+        path = mise_which(language)
+        print_status(language, path, bool(path))
+
+
+if __name__ == "__main__":
+    main()
