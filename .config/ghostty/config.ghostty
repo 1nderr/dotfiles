@@ -12,7 +12,6 @@ adjust-cell-height = 12
 
 cursor-style = block
 cursor-style-blink = true
-mouse-scroll-multiplier = 0.5
 
 shell-integration = zsh
 desktop-notifications = true
