@@ -71,6 +71,7 @@ def main():
         for file in selected_files:
             source_path = Path(f"{source_path_prefix}{file}").expanduser()
             target_path = Path(f"{target_path_prefix}{file}").expanduser()
+            target_path.parent.mkdir(parents=True, exist_ok=True)
             copyfile(source_path, target_path)
     else:
         print("Sync cancelled")
