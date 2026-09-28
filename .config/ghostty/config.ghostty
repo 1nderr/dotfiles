@@ -5,7 +5,7 @@ background-opacity = 0.90
 background-blur = true
 
 font-size = 14
-font-family = Inconsolata
+font-family = Inconsolata Nerd Font
 font-thicken = true
 font-thicken-strength = 50
 adjust-cell-height = 12 

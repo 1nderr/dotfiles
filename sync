@@ -50,6 +50,7 @@ def main():
         if (
             file_path.startswith(".git/")
             or file_path.startswith("__pycache__/")
+            or file_path.startswith("fonts/")
             or file_path in IGNORED_FILES
         ):
             continue
