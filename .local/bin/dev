@@ -5,10 +5,6 @@ if [ -n "$1" ]; then
 fi
 
 CWD=$(pwd)
-WINDOW=$(basename "$CWD")
-
-# Create new window and left pane (nvim)
-tmux new-window -n "$WINDOW" -c "$CWD"
 
 tmux send-keys "nvim" Enter
 
