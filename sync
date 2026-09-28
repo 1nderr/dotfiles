@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 from shutil import copyfile
 
-IGNORED_FILES: list[str] = ["sync", ".gitignore", "tools"]
+IGNORED_FILES: list[str] = ["sync", ".gitignore", "tools", ".DS_Store"]
 
 
 def fzf(message: str, choices: list[str], *args: str) -> list[str]:
