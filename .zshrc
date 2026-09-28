@@ -135,6 +135,8 @@ alias rl="source ~/.zshrc"
 alias tl="tmux source ~/.config/tmux/tmux.conf"
 alias vi="nvim"
 alias vim="nvim"
+alias -s md="cat"
+alias -s git="git clone"
 
 # ============================================================
 # SECTION 7: START UP
