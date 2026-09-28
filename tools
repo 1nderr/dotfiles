@@ -6,28 +6,28 @@ from subprocess import run
 from sys import platform
 
 FILES = [
-    Path("~/.zshrc").expanduser(),
     Path("~/.config/ghostty/config.ghostty").expanduser(),
     Path("~/.config/tmux/tmux.conf").expanduser(),
+    Path("~/.zshrc").expanduser(),
 ]
 TOOLS = [
-    "mise",
-    "nvim",
-    "tmux",
-    "tms",
-    "tpm",
-    "gh",
-    "tree-sitter",
-    "rg",
+    "bat",
     "fd",
     "fzf",
-    "zoxide",
-    "bat",
-    "zsh",
+    "gcc",
+    "gh",
     "git",
     "make",
-    "gcc",
+    "mise",
+    "nvim",
+    "rg",
+    "tms",
+    "tmux",
+    "tpm",
+    "tree-sitter",
+    "zoxide",
     "xcode",
+    "zsh",
 ]
 LANGUAGES = [
     "go",
@@ -56,9 +56,11 @@ def print_status(tool: str, path: str | None, is_found: bool):
 
 
 def main():
+    print("Dotfiles:")
     for file in FILES:
         print_status(file.name, str(file), file.is_file())
 
+    print("\nTools:")
     for tool in TOOLS:
         path = None
 
@@ -73,11 +75,10 @@ def main():
 
         print_status(tool, path, bool(path))
 
-    if which("mise") is None:
-        return
-
+    is_mise_installed = bool(which("mise"))
+    print("\nLanguages:")
     for language in LANGUAGES:
-        path = mise_which(language)
+        path = None if not is_mise_installed else mise_which(language)
         print_status(language, path, bool(path))
 
 
