@@ -1,9 +1,4 @@
-# .localrc is used for config that is specific to the machine
-if [[ -f ~/.localrc ]]; then
-  source ~/.localrc
-else
-  touch ~/.localrc
-fi
+source ~/.localrc
 
 # ============================================================
 # SECTION 1: ENVIRONMENT
