@@ -130,7 +130,8 @@ alias rl="source ~/.zshrc"
 alias tl="tmux source ~/.config/tmux/tmux.conf"
 alias vi="nvim"
 alias vim="nvim"
-alias -s md="cat"
+alias -s {md,json,toml,yaml,yml,txt,conf,cfg,ini,env,properties}="cat"
+alias -s {png,jpg,jpeg,gif,webp,bmp,svg,avif,heic,heif,ico}="chafa"
 alias -s git="git clone"
 
 # ============================================================
