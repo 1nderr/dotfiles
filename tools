@@ -18,6 +18,7 @@ TOOLS = [
     "gcc",
     "gh",
     "git",
+    "magick",
     "make",
     "mise",
     "nvim",
