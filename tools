@@ -12,6 +12,7 @@ FILES = [
 ]
 TOOLS = [
     "bat",
+    "chafa",
     "fd",
     "fzf",
     "gcc",
