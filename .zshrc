@@ -75,6 +75,21 @@ _clone_plugin() {
   [ -d "$dir" ] || git clone "$url" "$dir"
 }
 
+# ZSH Vi Mode
+_clone_plugin https://github.com/jeffreytse/zsh-vi-mode
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+ZVM_VI_HIGHLIGHT_BACKGROUND=#eceff4
+ZVM_VI_HIGHLIGHT_FOREGROUND=#4c566a
+source "$ZSH_PLUGINS/zsh-vi-mode/zsh-vi-mode.zsh"
+
+# Rebinding p/P to use the system clipboard
+function zvm_after_init() {
+  zvm_bindkey vicmd 'p' zvm_paste_clipboard_after
+  zvm_bindkey vicmd 'P' zvm_paste_clipboard_before
+  zvm_bindkey visual 'p' zvm_visual_paste_clipboard
+  zvm_bindkey visual 'P' zvm_visual_paste_clipboard
+}
+
 # FZF Tab
 _clone_plugin https://github.com/Aloxaf/fzf-tab
 source "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"

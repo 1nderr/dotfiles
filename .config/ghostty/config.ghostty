@@ -10,7 +10,7 @@ font-thicken = true
 font-thicken-strength = 50
 adjust-cell-height = 12 
 
-cursor-style = block
+cursor-style = bar
 cursor-style-blink = false
 
 shell-integration = zsh
