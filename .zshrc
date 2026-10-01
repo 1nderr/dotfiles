@@ -134,7 +134,6 @@ PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 # ============================================================
 # SECTION 6: ALIASES
 # ============================================================
-alias bat="bat --theme=Nord"
 alias cat="bat -pp"
 alias cp="cp -i"
 alias mv="mv -i"
