@@ -11,25 +11,25 @@ FILES = [
     Path("~/.zshrc").expanduser(),
 ]
 TOOLS = [
-    "bat",
-    "chafa",
-    "fd",
-    "fzf",
-    "gcc",
-    "gh",
-    "git",
-    "magick",
-    "make",
-    "mise",
-    "nvim",
-    "rg",
-    "tms",
-    "tmux",
-    "tpm",
-    "tree-sitter",
-    "zoxide",
-    "xcode",
-    "zsh",
+    ["bat", "batcat"],
+    ["chafa"],
+    ["fd", "fdfind"],
+    ["fzf"],
+    ["gcc", "cc"],
+    ["gh"],
+    ["git"],
+    ["magick", "convert"],
+    ["make", "gmake"],
+    ["mise", "rtx"],
+    ["nvim"],
+    ["rg"],
+    ["tms"],
+    ["tmux"],
+    ["tpm"],
+    ["tree-sitter"],
+    ["zoxide"],
+    ["xcode", "xcode-select", "xcodebuild"],
+    ["zsh"],
 ]
 LANGUAGES = [
     "go",
@@ -63,22 +63,27 @@ def main():
         print_status(file.name, str(file), file.is_file())
 
     print("\nTools:")
-    for tool in TOOLS:
+    for tool_names in TOOLS:
         path = None
+        for tool in tool_names:
+            if bool(path):
+                break
 
-        if tool == "tpm" and TPM_PATH.is_dir() and any(TPM_PATH.iterdir()):
-            path = str(TPM_PATH)
-        elif tool == "xcode":
-            if not platform.startswith("darwin"):
-                continue
-            path = xcode_select()
-        else:
-            path = which(tool)
+            if tool == "tpm" and TPM_PATH.is_dir() and any(TPM_PATH.iterdir()):
+                path = str(TPM_PATH)
+            elif "xcode" in tool:
+                if not platform.startswith("darwin"):
+                    continue
+                path = xcode_select()
+            else:
+                path = which(tool)
+                path = "" if path is None else path
 
-        print_status(tool, path, bool(path))
+        if not path is None:
+            print_status(tool_names[0], path, bool(path))
 
-    is_mise_installed = bool(which("mise"))
     print("\nLanguages:")
+    is_mise_installed = bool(which("mise"))
     for language in LANGUAGES:
         path = None if not is_mise_installed else mise_which(language)
         print_status(language, path, bool(path))
