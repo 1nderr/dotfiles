@@ -52,7 +52,9 @@ source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 
 # Used for tmux-sessionizer
-. "$HOME/.cargo/env"
+if [[ -f "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi
 
 # ============================================================
 # SECTION 4: PLUGINS
