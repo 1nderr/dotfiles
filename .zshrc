@@ -103,8 +103,8 @@ autoload -Uz add-zsh-hook vcs_info
 # save it from executing extra checks
 zstyle ':vcs_info:*' enable git
 
-# Sets the format to [main]
-# Sets the action format [main|rebase-i]
+# Sets the format to [main]. 6 is cyan, %b gives the branch
+# Sets the action format [main|rebase-i]. %a gives the action
 zstyle ':vcs_info:*' formats ' %F{6}[%b]%f'
 zstyle ':vcs_info:*' actionformats ' %F{6}[%b|%a]%f'
 
@@ -114,23 +114,16 @@ add-zsh-hook precmd vcs_info
 # An option that enables the expanding of variables within the prompt
 setopt prompt_subst
 
-# Blue user name
-P_USER='%F{4}%n%f'
+PROMPT=$'\n%F{4}%n%f' # 4 is blue, %n gives the user name
 
-# Red ssh indicator
+# If using ssh, add some text to the prompt to indicate that
 if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
-  P_USER+='%F{1}[ssh]%f'
+  PROMPT+='%F{1}[ssh]%f' # 1 is red
 fi
 
-# Green directory path shortens to 3 directories
-P_PATH='%F{2}%4(~|…/%3~|%~)%f'
-
-# Magenta prompt arrow
-P_ARROW='%F{5}→%f '
-
-PROMPT='
-${P_USER} ${P_PATH}${vcs_info_msg_0_}
-${P_ARROW}'
+PROMPT+=' %F{2}%4(~|…/%3~|%~)%f' # 2 is green, path shortens to 3 directories
+PROMPT+=${vcs_info_msg_0_}
+PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 
 # ============================================================
 # SECTION 6: ALIASES
