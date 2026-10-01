@@ -9,8 +9,14 @@ fi
 # SECTION 1: ENVIRONMENT
 # ============================================================
 
+export BAT_THEME="Nord"
+
 # Prevents pip from installing modules globally
 export PIP_REQUIRE_VIRTUALENV=true
+
+# Makes Neovim the default editor
+export EDITOR=nvim
+export VISUAL=nvim
 
 # ============================================================
 # SECTION 2: OPTIONS
@@ -129,7 +135,7 @@ PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 # SECTION 6: ALIASES
 # ============================================================
 alias bat="bat --theme=Nord"
-alias cat="bat -p"
+alias cat="bat -pp"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -137,11 +143,9 @@ alias grc="vi ~/.config/ghostty/config.ghostty"
 alias lrc="vi ~/.localrc"
 alias trc="vi ~/.config/tmux/tmux.conf"
 alias zrc="vi ~/.zshrc"
-alias ls="ls -a --color=auto"
-alias rl="source ~/.zshrc"
+alias ls="ls -A --color=auto"
+alias rl="exec zsh"
 alias tl="tmux source ~/.config/tmux/tmux.conf"
-alias vi="nvim"
-alias vim="nvim"
 alias -s {md,json,toml,yaml,yml,txt,conf,cfg,ini,env,properties}="cat"
 alias -s {png,jpg,jpeg,gif,webp,bmp,svg,avif,heic,heif,ico}="chafa"
 alias -s git="git clone"
