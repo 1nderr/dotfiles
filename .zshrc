@@ -114,10 +114,23 @@ add-zsh-hook precmd vcs_info
 # An option that enables the expanding of variables within the prompt
 setopt prompt_subst
 
-# %F{2}%4(~|…/%3~|%~) - directory path shortens to 3 directories
+# Blue user name
+P_USER='%F{4}%n%f'
+
+# Red ssh indicator
+if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
+  P_USER+='%F{1}[ssh]%f'
+fi
+
+# Green directory path shortens to 3 directories
+P_PATH='%F{2}%4(~|…/%3~|%~)%f'
+
+# Magenta prompt arrow
+P_ARROW='%F{5}→%f '
+
 PROMPT='
-%F{4}%n%f %F{2}%4(~|…/%3~|%~)%f${vcs_info_msg_0_}
-%F{5}→%f '
+${P_USER} ${P_PATH}${vcs_info_msg_0_}
+${P_ARROW}'
 
 # ============================================================
 # SECTION 6: ALIASES
