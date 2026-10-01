@@ -146,5 +146,7 @@ alias -s git="git clone"
 # ============================================================
 
 # If not already using tmux, then reconnect to the last session
-# or create a new session
-test -z "$TMUX" && (tmux attach || tmux new-session)
+# or create a new session. Does not attach to tmux in ssh
+if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]; then
+  test -z "$TMUX" && (tmux attach || tmux new-session)
+fi
