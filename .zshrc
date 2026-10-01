@@ -49,7 +49,7 @@ autoload -Uz compinit
 compinit
 eval "$(~/.local/bin/mise activate zsh)"
 source <(fzf --zsh)
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
 
 # Used for tmux-sessionizer
 if [[ -f "$HOME/.cargo/env" ]]; then
@@ -122,7 +122,7 @@ if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
 fi
 
 PROMPT+=' %F{2}%4(~|…/%3~|%~)%f' # 2 is green, path shortens to 3 directories
-PROMPT+=${vcs_info_msg_0_}
+PROMPT+='${vcs_info_msg_0_}'
 PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 
 # ============================================================
@@ -130,7 +130,6 @@ PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 # ============================================================
 alias bat="bat --theme=Nord"
 alias cat="bat -p"
-alias cd="z"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
