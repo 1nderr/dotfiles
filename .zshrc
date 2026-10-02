@@ -70,13 +70,30 @@ else
 fi
 
 eval "$(~/.local/bin/mise activate zsh)"
-source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
 
 # Used for tmux-sessionizer
 if [[ -f "$HOME/.cargo/env" ]]; then
   . "$HOME/.cargo/env"
 fi
+
+# ZSH Vi Mode overrides bindings on init
+function zvm_after_init() {
+  # Rebinding p/P to use the system clipboard
+  zvm_bindkey vicmd 'p' zvm_paste_clipboard_after
+  zvm_bindkey vicmd 'P' zvm_paste_clipboard_before
+  zvm_bindkey visual 'p' zvm_visual_paste_clipboard
+  zvm_bindkey visual 'P' zvm_visual_paste_clipboard
+
+  enable-fzf-tab
+  source <(fzf --zsh)
+
+  # Binds up and down arrows to use substring search when going through history
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+  bindkey '^[OA' history-substring-search-up
+  bindkey '^[OB' history-substring-search-down
+}
 
 # ============================================================
 # SECTION 4: PLUGINS
@@ -98,14 +115,6 @@ ZVM_VI_HIGHLIGHT_BACKGROUND=#eceff4
 ZVM_VI_HIGHLIGHT_FOREGROUND=#4c566a
 source "$ZSH_PLUGINS/zsh-vi-mode/zsh-vi-mode.zsh"
 
-# Rebinding p/P to use the system clipboard
-function zvm_after_init() {
-  zvm_bindkey vicmd 'p' zvm_paste_clipboard_after
-  zvm_bindkey vicmd 'P' zvm_paste_clipboard_before
-  zvm_bindkey visual 'p' zvm_visual_paste_clipboard
-  zvm_bindkey visual 'P' zvm_visual_paste_clipboard
-}
-
 # FZF Tab
 _clone_plugin https://github.com/Aloxaf/fzf-tab
 source "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
@@ -120,12 +129,6 @@ source "$ZSH_PLUGINS/zsh-history-substring-search/zsh-history-substring-search.z
 # Turns off highlighting of the substring that was typed in
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=''
-
-# Binds up and down arrows to use substring search when going through history
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
 
 # ============================================================
 # SECTION 5: PROMPT
