@@ -51,8 +51,24 @@ setopt ignoreeof
 # SECTION 3: TOOL INITIALIZATION
 # ============================================================
 
+# .zcompdump caches which completion function handles which command.
+# A full compinit scans $fpath and audits it for security issues before
+# trusting the cache, which is slow. This runs the full check at most once
+# every 24 hours and loads the cache directly otherwise.
+#
+# - '#q' enables glob qualifiers inside [[ ]]
+# - 'N' expands to nothing instead of erroring when no match
+# - '.' matches regular files only
+# - 'mh+24' matches files modified more than 24 hours ago
 autoload -Uz compinit
-compinit
+setopt extendedglob
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+  touch ~/.zcompdump # Updates the dumps timestamp
+else
+  compinit -C
+fi
+
 eval "$(~/.local/bin/mise activate zsh)"
 source <(fzf --zsh)
 eval "$(zoxide init zsh --cmd cd)"
@@ -149,6 +165,7 @@ PROMPT+=$'\n%F{5}→%f ' # 5 is magenta
 # ============================================================
 # SECTION 6: ALIASES
 # ============================================================
+
 alias cat="bat -pp"
 alias cp="cp -i"
 alias mv="mv -i"
