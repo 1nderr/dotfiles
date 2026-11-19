@@ -1,8 +1,5 @@
 theme = Nord
-
 background = #22262F
-background-opacity = 0.85
-background-blur = true
 
 font-size = 14
 font-family = Inconsolata Nerd Font
