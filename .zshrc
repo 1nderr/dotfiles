@@ -69,6 +69,9 @@ else
   compinit -C
 fi
 
+# Tab completion matches every case-insensitive substring match
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
+
 eval "$(~/.local/bin/mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
