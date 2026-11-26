@@ -2,3 +2,6 @@
 	editor = nvim
 	hooksPath = ~/.git-hooks
 	defaultBranch = main
+[user]
+	email = 20195347+1nderr@users.noreply.github.com
+	name = 1nder
